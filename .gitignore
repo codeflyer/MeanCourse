@@ -1,0 +1,7 @@
+node_modules
+public
+logs
+.tmp
+.sass-cache
+bower_components
+ngApp/templates.js
