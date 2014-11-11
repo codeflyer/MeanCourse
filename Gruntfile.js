@@ -4,6 +4,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
 
     grunt.loadNpmTasks('grunt-ng-annotate');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-angular-templates');
@@ -36,6 +37,16 @@ module.exports = function (grunt) {
                 cwd: 'ngApp',
                 src: './**/*.html',
                 dest: 'ngApp/templates.js'
+            }
+        },
+        concat: {
+            'ngApp' : {
+                "src": [
+                    "ngApp/app.js",
+                    "ngApp/templates.js",
+                    "ngApp/**/*.js"
+                ],
+                "dest": "public/js/app.js"
             }
         },
         uglify : {
@@ -91,7 +102,7 @@ module.exports = function (grunt) {
         watch: {
             angular: {
                 files: ['ngApp/**/*.js', 'ngApp/**/*.html'],
-                tasks: ['ngapp'],
+                tasks: ['ngappconcat'],
                 options: {
                     spawn: false
                 }
@@ -101,6 +112,7 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask('prepare', ['mkdir']);
+    grunt.registerTask('ngappconcat', ['ngtemplates', 'concat']);
     grunt.registerTask('ngapp', ['ngtemplates', 'uglify:ngDev']);
     grunt.registerTask('ngappprod', ['ngapp', 'ngAnnotate', 'uglify:ngProd']);
 };
